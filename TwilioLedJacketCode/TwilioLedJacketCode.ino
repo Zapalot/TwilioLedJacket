@@ -83,8 +83,8 @@ SoftwareSerial softSerial(rxPin,dxPin);
 #include "streamFun.h"    // some convenience functions for receiving data from streams
 #include "gsmModule.h"    // a small GSM-Module interface for receiving SMS
 
-//#include "images.h"         // images you might want to show   (disabled in this version)
-//#include "imageSelection.h" // reception of image show commands (disabled in this version)
+#include "images.h"         // images you might want to show   
+#include "imageSelection.h" // reception of image show commands
 
 //this buffer is used for communication with the GSM module
 #define receiveBufLength 200          //maximum length of data from gsm module:
@@ -98,7 +98,7 @@ char messageBuffer[messageBufferLength]; //messages are stored here
 MimimalGSM gsm;               // manages setup&communication with the gsm module
 CommandParser smsParser;      // takes care of parsing incoming messages for commands
 LedEffectEngine effectEngine; // does the actual graphics
-//LedImageSelector ledImageEngine; //receives image commands and shows images
+LedImageSelector ledImageEngine; //receives image commands and shows images
 
 
 // the receive handler stores incoming messages and lets the Twilio logo indicate reception
@@ -138,7 +138,7 @@ void setup(){
   smsParser.addCallback(F("#white"),startWhite);
   smsParser.addCallback(F("#black"),startBlack);
 
-  //smsParser.addReceiver(&ledImageEngine);  // Image showing is disabled in this version
+  smsParser.addReceiver(&ledImageEngine);  // Image showing is disabled in this version
   
   //LED initialization
   setupDisplayLedIndices(); // make a list of all LEDs that are not part of the logo
@@ -176,7 +176,7 @@ void loop(){
   receiveHandler.update();        // blink receive indicator and parse newest message when finished
   effectEngine.updateColors();    // update LED colors according to current effect
 
-  //ledImageEngine.applyOnLeds(); // show images 
+  ledImageEngine.applyOnLeds(); // show images 
 
   //check for gsm connection using flag updated by "gsm.update()"
   if(!gsm.connectionGood){

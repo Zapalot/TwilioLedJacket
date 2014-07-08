@@ -14,15 +14,12 @@
 #include "commands.h"
 #include "debugTrace.h"
 
-#define nImages 4
-prog_char imageName0[] PROGMEM = "#trafo";
-prog_char imageName1[] PROGMEM = "#smiley";
-prog_char imageName2[] PROGMEM = "#stawberry";
-prog_char imageName3[] PROGMEM = "#wear";
+#define nImages 1
+prog_char imageName0[] PROGMEM = "#ger";
 
 
-prog_char * const imageNames[] = {imageName0, imageName1, imageName2, imageName3};
-const prog_uchar* const images[]={image0,image1,image2,image3};
+prog_char * const imageNames[] = {imageName0};
+const prog_uchar* const images[]={image0};
 class LedImageSelector:public AbstractCommandReceiver{
   public:
   LedImageSelector();
@@ -54,10 +51,10 @@ void LedImageSelector::applyOnLeds(){
   if(millis()-lastSetTime>15000)selectedImageIndex=-1;
   if(selectedImageIndex<0)return; //-1 means nothing selected
  int arrayIndex=0;
- for (int i=0;i<nTotalLeds;i++){
-   colorBuffer[i].r=pgm_read_byte(&images[selectedImageIndex][i*3]);
-   colorBuffer[i].g=pgm_read_byte(&images[selectedImageIndex][i*3+1]);
-   colorBuffer[i].b=pgm_read_byte(&images[selectedImageIndex][i*3+2]);
+ for (int i=0;i<nDisplayLeds;i++){
+   colorBuffer[displayLeds[i]].r=pgm_read_byte(&images[selectedImageIndex][i*3]);
+   colorBuffer[displayLeds[i]].g=pgm_read_byte(&images[selectedImageIndex][i*3+1]);
+   colorBuffer[displayLeds[i]].b=pgm_read_byte(&images[selectedImageIndex][i*3+2]);
  }
  
 }

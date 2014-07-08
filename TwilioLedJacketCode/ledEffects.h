@@ -150,9 +150,9 @@ void LedEffectEngine::doFade(){
 // each led has a small random chance to light up and will then fade out
 void LedEffectEngine::doGlitter(){
   unsigned long timeSinceUpdate= millis()-lastUpdateMillis;
-  float chancePerSecond=0.5;
+  float chancePerSecond=0.9;
   float chanceNow=chancePerSecond*(float)timeSinceUpdate/1000.0;
-  int decay=10;
+  int decay=15;
   long activationThresh=(long)(chanceNow*10000.0); // this will be compared to a random value
   //set all the leds to that color
   for(int i=0;i<nDisplayLeds;i++){
