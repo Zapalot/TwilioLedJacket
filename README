@@ -1,44 +1,45 @@
-////////////////////////////////////////////////////////////////////
-// This sketch shows how to remote control wearable LEDs using text messages
-//
-// Messages sent over the Twilio API can be received by a GSM Module.
-// We used a generic 'SIM900' based Module, but anything that understands AT-commands over UART should work as well.
-//
-// A chain of individually adressable WS2801 LEDs is controlled by the Arduino.
-// The code supports current limiting to allow safe powering over USB.
-//
-// Except for the Rainbow-Fade Effect by Stefan Hintz/TrafoPop, this code is under A Creative Commons Attribution/Share-Alike License
-// http://creativecommons.org/licenses/by-sa/4.0/
-// (2014) by Felix Bonowski / Made for Twilio 
-////////////////////////////////////////////////////////////////////
+ This sketch shows how to remote control wearable LEDs using text messages
 
-///////////////////////How to wire things up:///////////////////////
-// 
-// ----------Connection to the GSM Module:--------------------------
-// Our module was a bit picky about power.
-// It needs AT LEAST 5.0V, anything less and it will crash erratically...
-// The Arduino 5V pin actually gives you only about 4.7V because of the voltage drop across the protection diode on the Arduino board.
-// The easiest way to make things work reliably is to cut a USB cable in the middle and draw power from it directly.
-//
-// So here is how you do it...
-// GSM Module Ground/'-' <----> Arduino GND/0V (both connections are needed- see below!)
-// GSM Module Ground/'-' <----> Cut USB cable GND (usually black) (both connections are needed- see above!)
-// GSM Module 5V/'+'     <----> Cut USB cable 5V (usually red)
-// GSM Module RX         <----> Arduino TX (Pin 0 on Leonardo/Micro/ProMicro, see below for Software Serial i.e. on Nano)
-// GSM Module TX         <----> Arduino RX (Pin 1 on Leonardo/Micro/ProMicro, see below for Software Serial i.e. on Nano)
-// GSM Module Power-On   <----> Arduino any digital Pin (#defined by 'gsmPowerPin' below)
-//
-// ----------Connection to the LEDs:--------------------------
-//
-// Any kind of WS2801 SPI-type controlled LEDs are supported.
-// They can draw a low of power, so make sure you set the current limit and/or have a good USB power supply...
-// It is also a good idea to put a large electrolythic capacitor (~1000µF, >=10V) in parallel to the LED Power supply
-// 
-//
-// Unfortunately, there is no standard color scheme for the wires, so you will have to look at the datasheet to find out.
-//
-// LED strand GND/0V/-      <----> Arduino GND and/or cut USB cable GND (usually black)
-// LED strand 5V/+          <----> Arduino 5V and/or cut USB cable 5V (usually red)
-// LED strand MOSI/Data in  <----> Arduino MOSI (Pin 16 on Arduino Pro Micro, Pin 11 on Arduino Nano)
-// LED strand SCLK/Clock    <----> Arduino SCLK (Pin 15 on Arduino Pro Micro, Pin 13 on Arduino Nano)
-/////////////////////Have Fun!//////////////////////////////////////////
+ Messages sent over the Twilio API can be received by a GSM Module.
+ We used a generic 'SIM900' based Module, but anything that understands AT-commands over UART should work as well.
+
+ A chain of individually adressable WS2801 LEDs is controlled by the Arduino.
+ The code supports current limiting to allow safe powering over USB.
+
+ Except for the Rainbow-Fade Effect by Stefan Hintz/TrafoPop, this code is under A Creative Commons Attribution/Share-Alike License
+ http:creativecommons.org/licenses/by-sa/4.0/
+ (2014) by Felix Bonowski / Made for Twilio 
+
+
+How to wire things up:
+ 
+ ----------Connection to the GSM Module:--------------------------
+ Our module was a bit picky about power.
+ It needs AT LEAST 5.0V, anything less and it will crash erratically...
+ The Arduino 5V pin actually gives you only about 4.7V because of the voltage drop across the protection diode on the Arduino board.
+ The easiest way to make things work reliably is to cut a USB cable in the middle and draw power from it directly.
+
+ So here is how you do it...
+ GSM Module Ground/'-' <----> Arduino GND/0V (both connections are needed- see below!)
+ GSM Module Ground/'-' <----> Cut USB cable GND (usually black) (both connections are needed- see above!)
+ GSM Module 5V/'+'     <----> Cut USB cable 5V (usually red)
+ GSM Module RX         <----> Arduino TX (Pin 0 on Leonardo/Micro/ProMicro, see below for Software Serial i.e. on Nano)
+ GSM Module TX         <----> Arduino RX (Pin 1 on Leonardo/Micro/ProMicro, see below for Software Serial i.e. on Nano)
+ GSM Module Power-On   <----> Arduino any digital Pin (#defined by 'gsmPowerPin' below)
+
+ ----------Connection to the LEDs:--------------------------
+
+ Any kind of WS2801 SPI-type controlled LEDs are supported.
+ They can draw a low of power, so make sure you set the current limit and/or have a good USB power supply...
+ It is also a good idea to put a large electrolythic capacitor (~1000µF, >=10V) in parallel to the LED Power supply
+ 
+
+ Unfortunately, there is no standard color scheme for the wires, so you will have to look at the datasheet to find out.
+
+ LED strand GND/0V/-      <----> Arduino GND and/or cut USB cable GND (usually black)
+ LED strand 5V/+          <----> Arduino 5V and/or cut USB cable 5V (usually red)
+ LED strand MOSI/Data in  <----> Arduino MOSI (Pin 16 on Arduino Pro Micro, Pin 11 on Arduino Nano)
+ LED strand SCLK/Clock    <----> Arduino SCLK (Pin 15 on Arduino Pro Micro, Pin 13 on Arduino Nano)
+
+ 
+ Have Fun!
